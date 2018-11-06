@@ -1,0 +1,29 @@
+<h1>{{title}}</h1>
+<form method="POST" action="/skserv/services">
+  <h2>Add Service</h2>
+  <div class="form-group">
+    <div class="input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">Category</span>
+        </div>
+      <select class="custom-select" required value="category" name="category" >
+        <option value="">Choose your Category</option>
+        <option value="mechanic">Mechanic</option>
+        <option value="saloonist">Saloonist</option>
+        <option value="plumber">Plumber</option>
+        <option value="electrician">Electrician</option>
+        <option value="laundry">Laundry</option>
+        <option value="gardener">Gardener</option>
+      </select>
+    </div>
+    <br>
+ <div class="input-group">
+  <div class="input-group-prepend">
+    <span class="input-group-text">My Location</span>
+  </div>
+  <input type="text" aria-label="First name" class="form-control" name ="location" placeholder=" my location" required>
+</div>
+<br>
+  <button type="submit" class="btn btn-primary">Add Service</button>
+  <a href="/skserv" ><button type="button" class="btn btn-danger">Cancel</button></a>
+</form>

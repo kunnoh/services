@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>{{title}}</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <link rel='stylesheet' href='/stylesheets/bootstrap.css' />
+  </head>
+  <ul class="nav justify-content-end">
+  <li class="nav-item">
+    {{#if user}}
+    <a class="nav-link" href="/logout">Logout</a>
+  </li>
+  <li class="nav-item">
+    {{else}}
+    <a class="nav-link" href="/skserv">SokoKapu services</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="/login">Login</a>
+  </li>
+{{/if}}
+</ul>
+    {{#if success}}
+      <p class="alert alert-success">{{this}}</p>
+    {{/if}}
+  <body>
+    {{{body}}}
+
+  <script src="/javascripts/jquery.min.js"></script>
+  <script src="/javascripts/bootstrap.js"></script>
+  <script src="/js/main.js"></script>
+  </body>
+</html>
+

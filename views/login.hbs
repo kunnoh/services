@@ -1,0 +1,35 @@
+<h1>{{title}}</h1>
+<h2>Login</h2>
+    {{#if messages}}
+  <div class="alert alert-primary" role="alert">
+    {{this}}
+  </div>
+  {{/if}}
+
+<form method="POST" action="/login">
+  <div class="form-row">
+    <div class="form-group col-md-6">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Username</span>
+          </div>
+            <input type="text" aria-label="Username" class="form-control" id ="username" name= "username" placeholder="enter username" required>
+        </div>
+    </div>
+  </div>
+  <br>
+    <div class="form-row">
+    <div class="form-group col-md-6">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Password</span>
+          </div>
+            <input type="password" aria-label="password" class="form-control" id ="password" name="password" placeholder="enter password" required>
+        </div>
+    </div>
+  </div>
+  <br>
+  <p>I <a href="/forgotpass">forgot my password</a> or dont have an account. <a href="/signup">Sign Up</a></p>
+  <button type="submit" value="login" class="btn btn-primary">Sign in</button>
+  <a href="/" ><button type="button" class="btn btn-danger" >Cancel</button></a>
+</form>

@@ -1,0 +1,87 @@
+<h1>{{title}}</h1>
+<form method="POST" action="/signup" class="form-group"> 
+<h2>Register</h2>
+<br>
+
+
+  {{#each errors}}
+    <div class="alert alert-danger" role="alert">
+      {{msg}}
+    </div> 
+  {{/each}}
+  {{#if messages}}
+  <div class="alert alert-danger" role="alert">
+    {{message}}
+  </div>
+  {{/if}}
+
+  <div class="form-row">
+    <div class="form-group col-md-6">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">First name</span>
+          </div>
+            <input type="text" aria-label="First name" class="form-control" name ="firstName" placeholder="enter first name" required>
+        </div>
+    </div>
+  </div>
+  <br>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">last name</span>
+          </div>
+            <input type="text" aria-label="First name" class="form-control" name ="lastName" placeholder="enter last name" required>
+        </div>
+    </div>
+  </div>
+  <br>
+    <div class="form-row">
+    <div class="form-group col-md-6">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Username</span>
+          </div>
+            <input type="text" aria-label="username" class="form-control" name ="username" placeholder="enter username" required>
+        </div>
+    </div>
+  </div>
+  <br>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Email</span>
+          </div>
+            <input type="email" aria-label="email" class="form-control" name ="email" placeholder=" your email" required>
+        </div>
+    </div>
+  </div>
+  <br>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Create password</span>
+          </div>
+            <input type="password" aria-label="Password" class="form-control" name ="password" placeholder=" enter your password" required>
+        </div>
+    </div>
+  </div>
+  <br>
+  <div class="form-row">
+    <div class="form-group col-md-6">
+        <div class="input-group">
+          <div class="input-group-prepend">
+            <span class="input-group-text">Confirm password</span>
+          </div>
+            <input type="password" aria-label="Confirm password" class="form-control" name ="cPassword" placeholder=" confirm your password" required>
+        </div>
+    </div>
+  </div>
+  <br>
+  <p>I have an account <a href="/login">login</a></p>
+  <button type="submit" class="btn btn-primary">Create Account</button>
+  <a href="/" ><button type="button" class="btn btn-danger" >Cancel</button></a>
+</form>

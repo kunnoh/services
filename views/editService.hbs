@@ -1,0 +1,39 @@
+<h2>{{title}}</h2>
+  {{#if messages}}
+    <div class="alert alert-primary" role="alert">
+      {{this}}
+    </div> 
+  {{/if}}
+
+
+ <!-- Editable table -->
+<div class="card">
+    <h3 class="card-header text-center font-weight-bold text-uppercase py-4">Edit Service</h3>
+    <div class="card-body">
+        <form method="POST" action="/skserv/services/{{service._id}}" >
+        <div id="table" class="table-editable">
+            <span class="table-add float-right mb-3 mr-2"><a href="#!" class="text-success"><i class="fa fa-plus fa-2x" aria-hidden="true"></i></a></span>
+            <table class="table table-bordered table-responsive-md table-striped text-center">
+                <tr>
+                    <th class="text-center">Category</th>
+                    <th class="text-center">First name</th>
+                    <th class="text-center">last name</th>
+                    <th class="text-center">Location</th>
+                    <th class="text-center">modify</th>
+                </tr>
+                <tr>
+                    <td class="pt-3-half" name ="category" >{{service.category}}</td>
+                    <td class="pt-3-half"  ><input type="text" name ="firstName" class="inputt" value = "{{service.firstName}}"></td>
+                    <td class="pt-3-half"  ><input type="text" name ="lastName" class="inputt" value = "{{service.lastName}}"></td>
+                    <td class="pt-3-half"  ><input type="text" name = "location" class="inputt" value = "{{service.location}}"></td>
+                    <td>
+                        <span class="table-remove"><button type="submit" value="submit" class="btn btn-success btn-rounded btn-sm my-0">Update</button></span>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        </form>
+    </div>
+</div>
+<br>
+<a href="/skserv" ><button type="button" class="btn btn-danger" >Cancel</button></a>

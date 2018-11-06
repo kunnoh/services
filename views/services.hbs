@@ -1,0 +1,34 @@
+<h1>{{title}}</h1>
+      {{#if messages}}
+  <div class="alert alert-success" role="alert">
+    {{this}}
+  </div>
+  {{/if}}
+
+<p>Welcome to {{title}}</p>
+<p>our services: </p>
+
+  
+<table class="table table-hover table-dark" id="services">
+ 
+  <thead>
+    <tr>
+      <th scope="col">Category</th>
+      <th scope="col">Name</th>
+      <th scope="col">Location</th>
+      <th scope="col">Option</th>
+    </tr>
+  </thead>
+  <tbody>
+     {{#each services}}
+    <tr>
+        <td>{{category}}</td>
+        <td>{{firstName}} {{lastName}}</td>
+        <td>{{location}}</td>
+        <td><a href="/skserv/services/{{_id}}">Edit </a>
+        <a class="delete-service" data-id="{{_id}}" href="#">Delete</a></td>
+    </tr>
+  </tbody>
+  {{/each}}
+</table>
+<a href="/skserv/services/add" ><button type="button" class="btn btn-primary" >add service</button></a>
