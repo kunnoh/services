@@ -1,6 +1,11 @@
 const LocalStrategy   = require('passport-local').Strategy;
-const User = require('../models/user');
 const bcrypt = require('bcryptjs');
+const JwtStrategy = require('passport-jwt');
+const ExtractJwt = require('passport-jwt').ExtractJwt;
+const User = require('../models/user');
+const auth = require('../controller/authentication');
+
+
 
 module.exports = function(passport){
 
@@ -21,16 +26,19 @@ module.exports = function(passport){
                     // User exists but wrong password, log the error 
                     if (!isValidPassword(user, password)){
                         console.log('Invalid Password');
-                        req.flash('message', 'Invalid Password')
-                        return done(null, false ); // redirect back to login page
+                        return done(null, false,req.flash('message', 'Invalid Password')); // redirect back to login page
                     
                     }
+
+                    else{
+                        console.log('login successful');
+                    }                  
                     // User and password both match, return user from done method
                     // which will be treated like success
-                    return done(null, user, req.flash('success','Dear: '+user, 'you are now logged in. book a service'));
+                    return done(null, user, req.flash('success','Dear: '+user.username, 'you are now logged in. book a service'));
                 }
             );
-
+            
         })
     );
 
@@ -38,5 +46,4 @@ module.exports = function(passport){
     var isValidPassword = function(user, password){
         return bcrypt.compareSync(password, user.password);
     };
-    
 };

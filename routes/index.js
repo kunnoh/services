@@ -4,7 +4,9 @@ const User = require('../models/user');
 const nodemail =  require('nodemailer');
 const async = require('async');
 const crypto = require('crypto');
-const expressValidator = require('express-validator');
+const jwebt = require('jsonwebtoken');
+const fs = require('fs');
+
 
 
 
@@ -32,16 +34,41 @@ module.exports = function(passport){
   
   //login process
    router.post('/login', passport.authenticate('login', {
-     successRedirect:'/skserv',
      failureRedirect: '/login', 
      failureFlash: true
-  }));
+  }),function(req, res){
+    User.findOne({username: req.body.username}, function(err, user){
+      if(err){
+        console.log(err);
+        return done(err);
+      }
+      if(user){
+        const secretOrKey = fs.readFileSync(__dirname +'/../config/rsakeys/private.key', 'utf8');
+        
+        payload={
+          userid: user._id,
+          username: user.username,
+          email: user.email,
+          role: user.role
+        };
+        const token = jwebt.sign(payload, secretOrKey, {expiresIn: 36000});
+        res.setHeader(token, JSON.stringify(token));
+        res.redirect(307,'/auth'); 
+      }
+    });
 
+  });
+
+  router.post('/auth', passport.authenticate('jwt', {
+    successRedirect: 'skserv',
+    failureRedirect: '/login',
+    failureFlash: true
+  }));
   
   //register route
   router.get('/signup', function(req, res){
     res.render('register', {
-      title: ' Sokokapu Register',
+      title: 'Sokokapu Register',
   });
   });
   

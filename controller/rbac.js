@@ -15,5 +15,5 @@ const rbac = new RBAC({
         superadmin: ['admin'],
     },
 });
-await rbac.init();
+ rbac.init();
 module.exports = rbac;

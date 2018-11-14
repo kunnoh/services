@@ -4,6 +4,8 @@ const path = require('path');
 const hbs = require('express-handlebars');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+const expressJwt = require('express-jwt');
+const jwt =require('jsonwebtoken');
 const expressValidator = require('express-validator');
 const session = require('express-session');
 const passport = require('passport');
@@ -37,7 +39,6 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(bodyParser.urlencoded({ extended: true })); 
-
 
 // view engine setup
 app.engine('hbs', hbs({extname: 'hbs', defaultLayout:'layout', layoutsDir: __dirname + '/views'}));
@@ -92,6 +93,7 @@ app.use(function(req, res, next) {
 let initPassport = require('./passport/init');
 initPassport(passport);
 
+//app.use(expressJwt({secret: 'mysecretcantbeshared'}).unless({path: ['/', '/login']}));
 
 
 let indexRouter = require('./routes/index')(passport);

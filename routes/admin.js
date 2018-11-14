@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const rbac = require('../contoller/rbac');
+//const rbac = require('../controller/rbac');
 const Service = require('../models/Servces');
 
 
