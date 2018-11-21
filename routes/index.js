@@ -6,6 +6,7 @@ const async = require('async');
 const crypto = require('crypto');
 const jwebt = require('jsonwebtoken');
 const fs = require('fs');
+const bcrypt = require('bcryptjs');
 
 
 
@@ -28,7 +29,7 @@ module.exports = function(passport){
   });
   
   //login route
-  router.get('/login', function(req, res, next){
+  router.get('/login', function(req, res){
     res.render('login', {title: ' Sokokapu login'});
   });
   
@@ -36,35 +37,64 @@ module.exports = function(passport){
    router.post('/login', passport.authenticate('login', {
      failureRedirect: '/login', 
      failureFlash: true
-  }),function(req, res){
+  }),function(req, res, next){
     User.findOne({username: req.body.username}, function(err, user){
       if(err){
         console.log(err);
         return done(err);
       }
       if(user){
-        const secretOrKey = fs.readFileSync(__dirname +'/../config/rsakeys/private.key', 'utf8');
+        const privatekey = fs.readFileSync(__dirname +'/../config/rsakeys/private.key', 'utf8');
         
         payload={
           userid: user._id,
           username: user.username,
-          email: user.email,
           role: user.role
         };
-        const token = jwebt.sign(payload, secretOrKey, {expiresIn: 36000});
-        res.setHeader(token, JSON.stringify(token));
-        res.redirect(307,'/auth'); 
+        signOptions = {
+          expiresIn: 36000,
+          algorithm: 'RS256'
+        };
+        const token = jwebt.sign(payload, privatekey, signOptions);
+        res.cookie('token', token, {httpOnly: true}).redirect(307, '/auth');
+        //console.log(token);
       }
     });
 
   });
-
-  router.post('/auth', passport.authenticate('jwt', {
-    successRedirect: 'skserv',
-    failureRedirect: '/login',
-    failureFlash: true
-  }));
   
+//auth post
+router.post('/auth', function(req, res){
+    let token = req.cookies.token;
+    //console.log('my token is: '+token);
+
+    const publickey = fs.readFileSync(__dirname +'/../config/rsakeys/public.key', 'utf8');
+    jwebt.verify(token, publickey, function(err, payload){
+      if(err) {console.log(err);}
+      else{
+        User.findById({_id:payload.userid}, function(err, user){
+          if(err){console.log('authe failed');}
+          else{
+            let checkPwd = function(req, user){
+              return bcrypt.compare(req.user.password, user.password);
+            };  
+            if(!checkPwd(req, user)){
+              console.log('auth failed');
+            }
+            else{
+              res.redirect('skserv');
+            }
+          }
+        });
+        console.log(payload);
+      }
+      
+    });
+    
+
+});
+
+
   //register route
   router.get('/signup', function(req, res){
     res.render('register', {

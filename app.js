@@ -4,8 +4,8 @@ const path = require('path');
 const hbs = require('express-handlebars');
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
-const expressJwt = require('express-jwt');
-const jwt =require('jsonwebtoken');
+//const expressJwt = require('express-jwt');
+//const jwt =require('jsonwebtoken');
 const expressValidator = require('express-validator');
 const session = require('express-session');
 const passport = require('passport');
@@ -105,7 +105,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', indexRouter);
 app.use('/admin', adminRouter);
 app.use('/skserv', skservRouter);
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

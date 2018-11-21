@@ -1,5 +1,4 @@
 const login = require('./login');
-const jwt = require('./jwt');
 const signup = require('./signup');
 const User = require('../models/user');
 
@@ -20,7 +19,6 @@ module.exports = function(passport){
 
     //setup passport startegy for login and signup
     login(passport);
-    jwt(passport);
     signup(passport);
     
 
