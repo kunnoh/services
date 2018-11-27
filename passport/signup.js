@@ -58,6 +58,7 @@ module.exports = function(passport){
                                 throw err; 
                             }
                             console.log('User Registration succesful');    
+                            console.log(newUser);
                             return done(null, newUser, req.flash('success','you are now registred, you can login'));
                         });
                     }
@@ -70,7 +71,6 @@ module.exports = function(passport){
             process.nextTick(findOrCreateUser);
         })
     );
-
     // Generates hash using bCrypt
     let createHash = function(password){
         return bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);

@@ -11,7 +11,7 @@ module.exports = function(passport){
             passReqToCallback : true
         }, function(req, username, password, done) { 
             // check in mongo if a user with username exists
-            User.findOne({ username :  username }, 
+            User.findOne({ username : username }, 
                 function(err, user) {
                     // In case of any error, return using the done method
                     if (err)
@@ -22,7 +22,7 @@ module.exports = function(passport){
                         return done(null, false, req.flash('message', 'User Not found.'));                 
                     }
                     // User exists but wrong password, log the error 
-                    if (!isValidPassword(user, password)){
+                    if (!isValidPassword(password, user)){
                         console.log('Invalid Password');
                         return done(null, false,req.flash('message', 'Invalid Password')); // redirect back to login page
                     
@@ -41,7 +41,8 @@ module.exports = function(passport){
     );
 
 
-    var isValidPassword = function(user, password){
+    let isValidPassword = function(password, user){
+        console.log(user);
         return bcrypt.compareSync(password, user.password);
     };
 };

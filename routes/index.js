@@ -219,7 +219,7 @@ router.post('/auth', function(req, res){
           }
 
           //validate password
-          let newpassword = req.body.newpassword;
+          let password = req.body.newpassword;
           let confirmpassword = req.body.confirmpassword;
 
           req.checkBody('newpassword','password is required').notEmpty();
@@ -231,26 +231,28 @@ router.post('/auth', function(req, res){
             console.log(errors);
             return;
           } else {
-          user.password = newpassword;
           user.resetPasswordExpires = undefined;
           user.resetPasswordToken = undefined;
-          console.log(user);
-          console.log('am here now');
-          }
+          
+          bcrypt.genSalt(10,function(err, salt){
+            if(err) return err;
+            bcrypt.hash(password, salt, function(err, hash){
+              if(err) return err;
+              user.password = hash;
 
-
-
-          user.save(function(err){
-            if(err){
-              console.log(err);
-              return res.redirect('/');
-            } else {
-              console.log('her now savin new password');
-              req.logIn(user, function(err){
-                done(err, user);
+              user.save(function(err){
+                if(err){
+                  console.log(err);
+                  return res.redirect('/');
+                } else {
+                  console.log(user);
+                  console.log('here now savin new password');
+                  res.redirect('/login');
+                }
               });
-            }
+            });
           });
+          }
         });
       },
     ]);

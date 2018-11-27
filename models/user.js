@@ -11,36 +11,32 @@ UserSchema = new Schema({
     password:{type: String, required: true},
     resetPasswordToken:{type: String},
     resetPasswordExpires: {type: Date},
-    role: {type: String, enum:['customer', 'admin', 'superAdmin'], default: 'user'}
+    role: {type: String, enum:['customer', 'admin', 'superAdmin', 'user'], default: 'user'}
     
     
 });
 
-UserSchema.pre('save', function(next){
-    let User = this;
-    let SALT_FACTOR = 10;
+// UserSchema.pre('save', function(next){
 
-    if(!User.isModified('password')) return next();
-    bcrypt.genSalt(SALT_FACTOR, function(err, salt){
-        if(err) {
-            console.log(err);
-            return next(err);
-        }
+//     let user = this;
+//     let SALT_FACTOR = 10;
 
-        //gen hash
-        bcrypt.hash(User.password, salt ,function(err, hash){
-            if(err){
-                console.log(err);
-                return next(err);
-            } else {
-                User.password = hash;
-                next();
-            }
-        });
-    });
-});
+//     //hash password if its new or modified
+//     if(!user.isModified('password')) return next();
+    
+//     // //gen salt
+//     // bcrypt.genSalt(SALT_FACTOR, function(err, salt){
+//     //     if(err) return next(err);
+//     //     //hash password with salt
+//     //     bcrypt.hash(user.password, salt, function(err, hash){
+//     //         if(err) return next(err);
+//     //         user.password = hash; 
+//     //         console.log(user.password);
+//     //          return next();
+//      //   });
+//     //});
 
+// });
 
-
-var User = mongoose.model('User', UserSchema);
+let User = mongoose.model('User', UserSchema);
 module.exports = User;
